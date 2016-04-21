@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "LAVA": {
+      "applicationId": "50wKalUThxSOSKwL6LDa4w9VtpV4aDP7vteLOb7i"
+    },
+    "_default": {
+      "link": "LAVA"
+    }
+  }
+}
