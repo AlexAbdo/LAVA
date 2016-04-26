@@ -12,10 +12,10 @@ Parse.Cloud.afterSave(Parse.User, function(request) { // "request" (within funct
             }
         }, {useMasterKey: true,
             success: function() {
-                console.log("Push sent successfully to" + pushQuery ) //Push was successful
+                console.log("Push sent successfully to" + pushQuery ); //Push was successful
             },
             error: function(error) {
-                console.error("Error in sending push " + error.code + " : " + error.message) //handle error
+                console.error("Error in sending push " + error.code + " : " + error.message); //handle error
                 throw "Got an error " + error.code + " : " + error.message;
             }
         });
@@ -26,8 +26,15 @@ Parse.Cloud.afterSave(Parse.User, function(request) { // "request" (within funct
 
 //What Bryton wrote:
 Parse.Cloud.afterSave("MobUp", function(request) {
-    query = new Parse.Query(Parse.User);
-    query = query.equalTo("objectID",request.object.id);
+    //query = new Parse.Query(Parse.User);
+    //query = query.equalTo("username", "test1");
+    
+    curruser = new Parse.User();
+    curruser.id = "at96kw37J5";
+    console.log("updating checkpoint");
+    curruser.set("checkpoint", true);
+    
+    /*
     query.count( {
         success: function(count) {
             console.log("count success")
@@ -41,6 +48,7 @@ Parse.Cloud.afterSave("MobUp", function(request) {
                 console.log("Wrong user");
         }
     })
+    */
 })
 
 
