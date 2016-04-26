@@ -2,15 +2,17 @@
 Parse.Cloud.afterSave(Parse.User, function(request) { // "request" (within function) is a user object
     if (request.object.get("checkpoint") === false) { // if mobile location has not already been updated
         console.log("entered into push function")
-        var pushQuery = new Parse.Query(Parse.Installation);
-        pushQuery.equalTo('deviceType', 'ios');
+        //var pushQuery = new Parse.Query(Parse.Installation);
+        //pushQuery.equalTo('objectId', 'wCUgpAsV86');
         Parse.Push.send( { //not sure if needed
-            where: pushQuery,
+            channels: ["global"],
+            //where: pushQuery,
             data: {
                 alert: "Parse is requesting your location" //Background notification
             }
-        }, {success: function() {
-                console.log("Push sent successfully") //Push was successful
+        }, {useMasterKey: true,
+            success: function() {
+                console.log("Push sent successfully to" + pushQuery ) //Push was successful
             },
             error: function(error) {
                 console.error("Error in sending push " + error.code + " : " + error.message) //handle error
