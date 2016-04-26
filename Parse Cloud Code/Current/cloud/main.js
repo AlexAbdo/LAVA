@@ -2,22 +2,19 @@
 Parse.Cloud.afterSave(Parse.User, function(request) { // "request" (within function) is a user object
     if (request.object.get("checkpoint") === false) { // if mobile location has not already been updated
         console.log("entered into push function")
+        var pushQuery = new Parse.Query(Parse.Installation);
+        pushQuery.equalTo('deviceType', 'ios');
         Parse.Push.send( { //not sure if needed
-        channels: ["LAVAm"], //the channel on the parse.com website?
-        data:
-            {
-                alert: "This app is going to record your location." //background notification
+            where: pushQuery,
+            data: {
+                alert: "Parse is requesting your location" //Background notification
             }
-        },
-        {
-        success: function() 
-            {
-                // Push was successful (include a function here?)
-                console.log("Push sent successfully")
+        }, {success: function() {
+                console.log("Push sent successfully") //Push was successful
             },
-        error: function(error) 
-            {
+            error: function(error) {
                 console.error("Error in sending push " + error.code + " : " + error.message) //handle error
+                throw "Got an error " + error.code + " : " + error.message;
             }
         });
     } else {
